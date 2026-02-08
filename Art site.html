@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Top 10 Art Projects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 32px 16px 48px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      letter-spacing: 0.03em;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--accent-soft);
+      background: linear-gradient(
+        135deg,
+        rgba(56, 189, 248, 0.12),
+        rgba(129, 140, 248, 0.08)
+      );
+      color: var(--accent);
+    }
+
+    .subtitle {
+      max-width: 640px;
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .meta-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, #020617 0, #020617 40%, #000 100%);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+
+    .project-rank {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      backdrop-filter: blur(10px);
+    }
+
+    .project-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    .project-body {
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .project-year {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .project-description {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid rgba(30, 64, 175, 0.6);
+      padding-top: 14px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 12px 32px;
+      }
+      header {
+        margin-bottom: 24px;
+      }
+      .project-card {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="title-row">
+        <h1>
+          My Top 10 Art Projects
+          <span class="badge">Portfolio highlight reel</span>
+        </h1>
+      </div>
+      <p class="subtitle">
+        A curated selection of my favorite pieces—spanning different mediums, moods, and experiments.
+        Each project taught me something new about storytelling, color, and composition.
+      </p>
+      <div class="meta-row">
+        <span class="meta-pill">10 featured works</span>
+        <span class="meta-pill">Mixed media &amp; digital</span>
+        <span class="meta-pill">Updated: 2026</span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- Project 1 -->
+      <article class="project-card">
+        <div class="project-rank">No. 1</div>
+        <div class="project-image"
+             style="background-image: url('images/project1.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title One</h2>
+            <span class="project-year">2025</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Digital painting</span>
+            <span class="tag">Portrait</span>
+          </div>
+          <p class="project-description">
+            Short 1–2 sentence description of the piece—what it explores, what makes it special,
+            or the story behind it.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Procreate, Photoshop</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card">
+        <div class="project-rank">No. 2</div>
+        <div class="project-image"
+             style="background-image: url('images/project2.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Two</h2>
+            <span class="project-year">2024</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Ink &amp; watercolor</span>
+            <span class="tag">Landscape</span>
+          </div>
+          <p class="project-description">
+            Describe the mood, technique, or experiment here—what you were trying to capture or learn.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Ink, watercolor</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card">
+        <div class="project-rank">No. 3</div>
+        <div class="project-image"
+             style="background-image: url('images/project3.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Three</h2>
+            <span class="project-year">2024</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Mixed media</span>
+            <span class="tag">Abstract</span>
+          </div>
+          <p class="project-description">
+            A brief note about the concept, composition, or process that makes this piece stand out.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Acrylic, collage</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="project-card">
+        <div class="project-rank">No. 4</div>
+        <div class="project-image"
+             style="background-image: url('images/project4.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Four</h2>
+            <span class="project-year">2023</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Character design</span>
+            <span class="tag">Digital</span>
+          </div>
+          <p class="project-description">
+            Mention the character, world, or narrative this design belongs to and what you focused on.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Clip Studio Paint</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="project-card">
+        <div class="project-rank">No. 5</div>
+        <div class="project-image"
+             style="background-image: url('images/project5.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Five</h2>
+            <span class="project-year">2023</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Poster design</span>
+            <span class="tag">Typography</span>
+          </div>
+          <p class="project-description">
+            Highlight the visual concept, color palette, or typographic choices that define this poster.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Illustrator</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 6 -->
+      <article class="project-card">
+        <div class="project-rank">No. 6</div>
+        <div class="project-image"
+             style="background-image: url('images/project6.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Six</h2>
+            <span class="project-year">2022</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Sketchbook</span>
+            <span class="tag">Studies</span>
+          </div>
+          <p class="project-description">
+            A collection or spread that captures your process—gesture, anatomy, lighting, or composition practice.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Pencil, markers</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 7 -->
+      <article class="project-card">
+        <div class="project-rank">No. 7</div>
+        <div class="project-image"
+             style="background-image: url('images/project7.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Seven</h2>
+            <span class="project-year">2022</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Environment</span>
+            <span class="tag">Concept art</span>
+          </div>
+          <p class="project-description">
+            Describe the world-building or lighting choices that make this environment memorable.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Photoshop</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 8 -->
+      <article class="project-card">
+        <div class="project-rank">No. 8</div>
+        <div class="project-image"
+             style="background-image: url('images/project8.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Eight</h2>
+            <span class="project-year">2021</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Traditional</span>
+            <span class="tag">Portrait</span>
+          </div>
+          <p class="project-description">
+            Note the medium and what you focused on—texture, likeness, or emotion.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Oil on canvas</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 9 -->
+      <article class="project-card">
+        <div class="project-rank">No. 9</div>
+        <div class="project-image"
+             style="background-image: url('images/project9.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Nine</h2>
+            <span class="project-year">2021</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Graphic novel</span>
+            <span class="tag">Sequential art</span>
+          </div>
+          <p class="project-description">
+            Mention pacing, panel layout, or storytelling choices that you’re proud of here.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Ink, digital tones</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 10 -->
+      <article class="project-card">
+        <div class="project-rank">No. 10</div>
+        <div class="project-image"
+             style="background-image: url('images/project10.jpg');">
+        </div>
+        <div class="project-body">
+          <div class="project-title-row">
+            <h2 class="project-title">Project Title Ten</h2>
+            <span class="project-year">2020</span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Experimental</span>
+            <span class="tag">Color study</span>
+          </div>
+          <p class="project-description">
+            A piece where you pushed yourself—new palette, new technique, or a different way of thinking.
+          </p>
+          <div class="project-footer">
+            <span>Primary tools: Mixed digital</span>
+            <a class="project-link" href="#" target="_blank" rel="noopener">
+              View full piece →
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <span>© Your Name — Portfolio selection</span>
+      <span>Contact: gmurimage@gmail.com</span>
+    </footer>
+  </main>
+</body>
+</html>
